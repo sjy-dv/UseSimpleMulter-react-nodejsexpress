@@ -33,13 +33,11 @@ module.exports = (function () {
 
   M.ArrayAdd = async (req, res) => {
     try {
-      console.log(req.files[0].filename);
       let store = [];
       for (let i = 0; i < req.files.length; i++) {
         let file = "/img/" + req.files[i].filename;
         store.push(file);
       }
-      console.log(store);
       const rows = await Mul.create({
         img: store.toString(),
         img2: "",
@@ -47,7 +45,6 @@ module.exports = (function () {
       });
       if (rows) res.status(200).json({ result: true });
     } catch (error) {
-      console.log(error);
       throw res.send(`May be.. is Error by DB\n
         Checking Error : ${error}`);
     }

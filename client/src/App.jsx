@@ -162,7 +162,6 @@ class App extends Component {
           let tagarray = [];
           for (let i = 0; i < imglength; i++) {
             let img = <img src={imgobj[i]} width={200} height={200} alt="" />;
-            console.log(img);
             tagarray.push(img);
           }
           return tagarray;
