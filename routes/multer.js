@@ -1,10 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { MulterController : controller } = require('../controllers');
-const { upload } = require('../utils/multer');
+const { MulterController: controller } = require("../controllers");
+const { singleupload, fieldsupload, arrayupload } = require("../utils/multer");
 
-router.get('/list', controller.List);
-router.post('/upload', upload, controller.Add);
+router.get("/singlelist", controller.SingleList);
+router.get("/fieldslist", controller.FieldsList);
+router.get("/arraylist", controller.ArrayList);
 
+router.post("/singleupload", singleupload, controller.SingleAdd);
+router.post("/fieldsupload", fieldsupload, controller.FiedlsAdd);
+router.post("/arrayupload", arrayupload, controller.ArrayAdd);
 
 module.exports = router;

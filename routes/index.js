@@ -1,5 +1,5 @@
-const mulRouter = require('./multer');
+const mulRouter = require("./multer");
 
 module.exports = {
-    mulRouter
-}
+  mulRouter,
+};
