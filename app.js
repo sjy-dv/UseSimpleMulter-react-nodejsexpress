@@ -6,7 +6,7 @@ if (cluster.isMaster) {
   let Check_Cpu = require("os").cpus().length;
 
   for (var i = 0; i < Check_Cpu; i++) {
-    console.log(`Master${process.pid} have many slave clusters ${i}`);
+    // console.log(`Master${process.pid} have many slave clusters ${i}`);
     cluster.fork();
   }
 
@@ -57,9 +57,9 @@ if ((!cluster.isMaster && !isWin) || (cluster.isMaster && isWin)) {
   setTimeout(function () {
     console.log(`worker : ${process.pid} is join`);
     if (cluster.isWorker) {
-      console.log("worker is running");
+      // console.log("worker is running");
     } else {
-      console.log("worker is not running");
+      // console.log("worker is not running");
     }
   }, 1000);
 

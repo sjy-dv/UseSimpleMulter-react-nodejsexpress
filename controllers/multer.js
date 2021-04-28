@@ -1,6 +1,6 @@
 const db = require("../models");
 const Mul = db.multer;
-
+const fs = require("fs");
 module.exports = (function () {
   const M = {};
 
@@ -81,6 +81,41 @@ module.exports = (function () {
       throw res.send(`May be.. is Error by DB\n
         Checking Error : ${error}`);
     }
+  };
+
+  M.VideoAdd = async (req, res) => {
+    try {
+      console.log(req);
+      let video = "/video/" + req.file.filename;
+      const rows = await Mul.create({ mode: "video", video: video });
+      //if (!rows) throw res.send(`Query is something Wrong ...`);
+      res.status(200).json({ reusult: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  M.VideoList = async (req, res) => {
+    try {
+      const rows = await Mul.findAll({ where: { mode: "video" } });
+      res.status(200).send(rows);
+    } catch (error) {}
+  };
+
+  M.VideoDel = async (req, res) => {
+    try {
+      let { videoname } = req.body;
+      let videopath = videoname.replace("/video/", "");
+      fs.unlink(`./uploads/${videopath}`, async (err) => {
+        if (err) console.log(err);
+        const del = await Mul.destroy({
+          where: {
+            video: videoname,
+          },
+        });
+        if (del) return res.status(200).json({ result: "success" });
+      });
+    } catch (error) {}
   };
 
   return M;

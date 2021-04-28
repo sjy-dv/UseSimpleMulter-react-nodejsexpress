@@ -16,12 +16,19 @@ class App extends Component {
       imgsingle: [],
       imgarray: [],
       imgfields: [],
+      singlevideo: "",
+      progress: 0,
     };
   }
 
   SingleChange = (e) => {
     this.setState({
       singlefile: e.target.files[0],
+    });
+  };
+  VideoChange = (e) => {
+    this.setState({
+      singlevideo: e.target.files[0],
     });
   };
 
@@ -74,6 +81,23 @@ class App extends Component {
     }
     await axios
       .post("/api/multer/arrayupload", formData)
+      .catch((err) => console.log(err));
+  };
+
+  videoupload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("video", this.state.singlevideo);
+    await axios
+      .post("/api/multer/videoupload", formData, {
+        onUploadProgress: (data) => {
+          this.setState({
+            progress: Math.round((100 * data.loaded) / data.total),
+          });
+          console.log(this.state.progress);
+        },
+      })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -141,6 +165,17 @@ class App extends Component {
           onChange={this.ArrayChange}
         />
         <button onClick={this.arrayupload}>uplaod</button>
+        <hr />
+
+        <h1>Upload Video</h1>
+        <input
+          type="file"
+          name="file"
+          file={this.state.singlevideo}
+          onChange={this.VideoChange}
+        />
+        <button onClick={this.videoupload}>uplaod</button>
+        <h3> {this.progress} % </h3>
         <hr />
 
         <h1>Upload File List_single</h1>

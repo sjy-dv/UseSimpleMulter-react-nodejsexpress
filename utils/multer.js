@@ -18,4 +18,6 @@ const fieldsupload = multer({ storage: storage }).fields([
 
 const arrayupload = multer({ storage: storage }).array("imgs", 12);
 
-module.exports = { singleupload, fieldsupload, arrayupload };
+const videoupload = multer({ storage: storage }).single("video");
+
+module.exports = { singleupload, fieldsupload, arrayupload, videoupload };
